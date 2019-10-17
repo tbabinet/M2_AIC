@@ -1,0 +1,6 @@
+docker run --name mongoserv -d mongo
+docker exec -it mongoserv mongo
+
+I - Preparing the database
+5 - erreur, bd pas créée
+6 - crée la collection movies
