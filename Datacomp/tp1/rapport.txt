@@ -1,0 +1,8 @@
+1 -  df1 = spark.read.csv('food.csv')
+2 - inspections = df1.na.drop(subset=['_c0','_c1', '_c12'])
+    Il est plus rapide de charger depuis la copie présente dans le dataframe
+3 -  nbre = inspections.select("_c12")
+     nbre.distinct().show()
+4 - nbre.groupBy('_c12').count().show()
+    take(int) renvoie une liste pyhton
+

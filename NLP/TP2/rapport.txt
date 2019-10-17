@@ -1,0 +1,86 @@
+1 - Avec le patron fourni, on obtient les résultats suivant : 
+* Load model
+* Label sequences
+      1000 sequences labeled	 8.29%/46.20%
+      2000 sequences labeled	 6.76%/47.45%
+      3000 sequences labeled	 6.35%/43.63%
+    Nb sequences  : 3684
+    Token error   :  6.61%
+    Sequence error: 42.37%
+* Per label statistics
+    O       Pr=0.95  Rc=0.99  F1=0.97
+    I-ORG   Pr=0.82  Rc=0.62  F1=0.70
+    I-MISC  Pr=0.82  Rc=0.67  F1=0.74
+    I-PER   Pr=0.88  Rc=0.70  F1=0.78
+    I-LOC   Pr=0.89  Rc=0.70  F1=0.79
+    B-LOC   Pr=0.00  Rc=0.00  F1=-nan
+    B-MISC  Pr=0.00  Rc=0.00  F1=-nan
+    B-ORG   Pr=-nan  Rc=0.00  F1=-nan
+* Done
+
+2 - En ajoutant des règles permettant de prendre en compte l'étiquetage morpho-syntaxique, on obtient les résultats suivant : 
+
+* Load model
+* Label sequences
+      1000 sequences labeled	 5.99%/37.50%
+      2000 sequences labeled	 5.24%/41.20%
+      3000 sequences labeled	 4.92%/37.97%
+    Nb sequences  : 3684
+    Token error   :  5.01%
+    Sequence error: 36.18%
+* Per label statistics
+    O       Pr=0.98  Rc=0.99  F1=0.98
+    I-ORG   Pr=0.73  Rc=0.72  F1=0.72
+    I-MISC  Pr=0.82  Rc=0.68  F1=0.74
+    I-PER   Pr=0.81  Rc=0.88  F1=0.85
+    I-LOC   Pr=0.85  Rc=0.75  F1=0.80
+    B-LOC   Pr=-nan  Rc=0.00  F1=-nan
+    B-MISC  Pr=-nan  Rc=0.00  F1=-nan
+    B-ORG   Pr=-nan  Rc=0.00  F1=-nan
+* Done
+
+On observe une amélioration des résultats.
+En ajoutant à ce patron une règle reconnaissant une majuscule en début de mot : u11:%t[0,0,"^\u"], on obtient les résultats suivant :
+
+* Load model
+* Label sequences
+      1000 sequences labeled	 5.30%/33.10%
+      2000 sequences labeled	 4.77%/37.35%
+      3000 sequences labeled	 4.48%/34.00%
+    Nb sequences  : 3684
+    Token error   :  4.54%
+    Sequence error: 32.46%
+* Per label statistics
+    O       Pr=0.99  Rc=0.99  F1=0.99
+    I-ORG   Pr=0.76  Rc=0.75  F1=0.75
+    I-MISC  Pr=0.78  Rc=0.73  F1=0.75
+    I-PER   Pr=0.81  Rc=0.90  F1=0.85
+    I-LOC   Pr=0.84  Rc=0.77  F1=0.80
+    B-LOC   Pr=-nan  Rc=0.00  F1=-nan
+    B-MISC  Pr=-nan  Rc=0.00  F1=-nan
+    B-ORG   Pr=-nan  Rc=0.00  F1=-nan
+* Done
+
+3 - Nous avons choisi d'intégrer l'étiquetage morpho-syntaxique donné par NLTK. On obtient les résultats suivant : 
+ Load model
+* Label sequences
+      1000 sequences labeled	 5.30%/32.30%
+      2000 sequences labeled	 4.27%/33.15%
+      3000 sequences labeled	 4.10%/32.00%
+    Nb sequences  : 3684
+    Token error   :  4.34%
+    Sequence error: 32.96%
+* Per label statistics
+    O       Pr=0.99  Rc=0.99  F1=0.99
+    I-ORG   Pr=0.76  Rc=0.76  F1=0.76
+    I-MISC  Pr=0.78  Rc=0.73  F1=0.77
+    I-PER   Pr=0.81  Rc=0.96  F1=0.86
+    I-LOC   Pr=0.84  Rc=0.79  F1=0.82
+    B-LOC   Pr=-nan  Rc=0.00  F1=-nan
+    B-MISC  Pr=-nan  Rc=0.00  F1=-nan
+    B-ORG   Pr=-nan  Rc=0.00  F1=-nan
+* Done
+
+On observe une faible augmentation des résultats. Cela s'explique facilement par le fait que l'on a simplement utilisé un 2e PoS tagger, et que les informations apportées sont donc en grande partie déjà présente.
+
+4 - Nous avons testé la reconnaissance d'entités nommées du module nltk. On obtient une précision de 89.3%, mais nous n'avons pas réussi à obtenir la précision par label. 

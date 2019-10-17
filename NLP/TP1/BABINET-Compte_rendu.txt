@@ -1,0 +1,14 @@
+- Objectif : compter le nombre de fois où l'on adresse la parole à chaque personnage principal
+et les classer sur ce critère.
+- Une analyse en dépendance permettrait de filtrer les phrases dans lesquelles un personnage s'adresse à un autre.
+On complétera cette analyse avec une analyse en entité nommées ou un étiquetage morpho-syntaxique.
+- Dans un premier temps, on pourra relever les mentions à un personnage dans les dialogues, à l'aide de l'analyse en
+entités nommées. On pourra ensuite, à l'aide de l'analyse en dépendance, vérifier que l'on ne parle pas seulement du
+personnage dans le dialogue, mais que l'on s'adresse bel et bien à lui. Enfin, on pourra tester si le personnage
+concerné appartient à une liste qui aura été construite au préalable. Leur classement, par ordre croissant ou
+décroissant, sera alors trivial.
+- Pour connaître les performances du programme, il serait possible d'annoter un épisode en indiquant dans quels
+dialogues un personnage s'adresse à un autre, et de l'utiliser uniquement pour tester le programme, et non pour
+le développer. Ainsi, plus le classement sera proches du nombre réel d'adressage à un personnage, plus le 
+programme sera bon. 
+
