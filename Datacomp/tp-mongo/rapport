@@ -2,5 +2,74 @@ docker run --name mongoserv -d mongo
 docker exec -it mongoserv mongo
 
 I - Preparing the database
-5 - erreur, bd pas créée
-6 - crée la collection movies
+    5 - erreur, bd pas créée
+    6 - crée la collection movies
+
+### copie enron.json dans le docker 'mongoserv'
+docker cp enron.json mongoserv:enron.json
+
+### dans le docker 'mongoserv', on effectue la commande mongoimport ...
+docker exec mongoserv mongoimport --db bdenron --collection emails --file enron.json
+
+liste des db => show bds
+
+insérer document dans movies (crée la collections si inexisante) : db.movies.insert("{"nom":"saw"}")
+
+###MongoDB => Database : ensemble de collections; collection : équivalent d'une table sql 
+
+###connection à la bd
+bdenron = connect("localhost:27017/bdenron")
+
+###affichage de la collection email dans la bd bdenron
+bdenron.emails.find()
+
+###on définit la variable emails_collection = bdenron.emails
+
+###mails envoyés par no.address@enron.com
+emails_collection.find({"sender" : "no.address@enron.com"}).pretty()
+
+###10 premiers mails triés par ordre alphabétique
+emails_collection.find().sort({"sender":1}).limit(10).pretty()
+
+###dossiers depuis lesquels on a envoyé les mails
+emails_collection.distinct("folder")
+
+###auteur et destinataires du mail, trié par auteur 
+emails_collection.find({}, {"sender":1,"recipients":1}).sort({"sender":1})
+
+###emails reçus à partir d'avril 2000
+emails_collection.find({"date":{$gt : '2000-04-01 00:00:00-00:00'} })
+
+###emails où replyto n'est pas null
+emails_collection.find({"replyto" : {$nin : [null]}}, {}).pretty()
+
+###compte des emails par auteur, envoyés après le 01/04/2000
+emails_collection.aggregate([
+    {
+        $match: 
+            {
+                "date" : { $gt: '2000-04-01 00:00:00-00:00'}
+            }
+    },
+    {
+        $group:
+            {   
+                "_id" : "$sender",
+                "count" : {$sum : 1}
+            }
+    }
+
+###map reduce pour le compte des mails envoyés par chaque auteur
+var mapFunction = function (){
+    emit(this.sender, 1);
+}
+
+var reduceFunction = function(k, v){
+    return Array.sum(v);
+}
+
+emails_collection.mapReduce(mapFunction, reduceFunction, {out : "fichier_out"})
+bdenron.fichier_out.find()
+
+
+
