@@ -1,3 +1,4 @@
+%%
 close all;
 %% ouverture image
 im = imread("barbara.jpg");
@@ -16,4 +17,4 @@ imshow(imconv);
 figure();
 
 %% translation
-im_trans_1 = imt
+im_trans_1 = im
